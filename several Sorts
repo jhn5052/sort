@@ -1,0 +1,308 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+int shell_compare = 0;
+int shell_move = 0;
+
+int merge_compare = 0;
+int merge_move = 0;
+
+int quick_compare = 0;
+int quick_move = 0;
+
+void SelectionSort(int arr[], int n) {
+	int temp;
+	int compare_cnt = 0;
+	int move_cnt = 0;
+	for (int i = 0; i < n - 1; i++) {
+		for (int j = i + 1; j < n; j++) {
+
+			if (arr[j] < arr[i]) {
+				temp = arr[j];
+				arr[j] = arr[i];
+				arr[i] = temp;
+				move_cnt += 2;
+			}
+			compare_cnt += 1;
+		}
+	}
+	printf("\n<Selection Sort>\n");
+	for (int i = 0; i < n; i++) {
+		if (i!=0 && i % 10 == 0) {
+			printf("\n");
+		}
+		printf("%d ", arr[i]);
+	}
+	printf("\ncompare number : %d \tmove number : %d\n", compare_cnt, move_cnt);
+}
+
+void BubbleSort(int arr[], int n) {
+	int temp;
+	int compare_cnt = 0;
+	int move_cnt = 0;
+	for (int i = 0; i < n-1; i++) {
+		for (int j = 0; j < n-1-i; j++) {
+			if (arr[j] > arr[j + 1]) {
+				temp = arr[j];
+				arr[j] = arr[j+1];
+				arr[j+1] = temp;
+				move_cnt += 2;
+			}
+			compare_cnt += 1;
+		}
+	}
+	printf("\n<Bubble Sort>\n");
+	for (int i = 0; i < n; i++) {
+		if (i!=0 && i % 10 == 0) {
+			printf("\n");
+		}
+		printf("%d ", arr[i]);
+	}
+	printf("\ncompare number : %d \tmove number : %d\n", compare_cnt, move_cnt);
+}
+
+void InsertSort(int arr[], int n) {
+	int val, i, pos;
+	int compare_cnt = 0;
+	int move_cnt = 0;
+	for (i = 1; i < n; i++) {
+		val = arr[i];
+		for (pos = i; pos > 0; pos--) {
+			if (val < arr[pos - 1]) {
+				arr[pos] = arr[pos - 1];
+				move_cnt += 1;
+				if (pos == 1) {
+					arr[pos - 1] = val;
+					move_cnt += 1;
+					compare_cnt += 1;
+					break;
+				}
+			}
+
+			else {
+				arr[pos] = val;
+				move_cnt += 1;
+				compare_cnt += 1;
+				break;
+			}
+		}
+	}
+	printf("\n<Insertion Sort>\n");
+	for (int j = 0; j < n; j++) {
+		if (j!=0 && j % 10 == 0) {
+			printf("\n");
+		}
+		printf("%d ", arr[j]);
+	}
+	printf("\ncompare number : %d \tmove number : %d\n", compare_cnt, move_cnt);
+}
+
+
+void InsertSort2(int arr[], int first, int last, int h) {
+	int tmp, j;
+	for (int i = first + h; i <= last; i += h) {
+		tmp = arr[i];
+		for (j = i; j > first; j -= h) {
+			if (tmp < arr[j - h]) {
+				arr[j] = arr[j - h];
+				shell_move += 1;
+				shell_compare += 1;
+			}
+			else {
+				shell_compare += 1;
+				break;
+			}
+
+		}
+		arr[j] = tmp;
+		shell_move += 1;
+
+	}
+}
+
+void ShellSort(int arr[], int n) {
+	int h, i;
+	h = n / 2;
+	while (h >= 1) {
+		for (i = 0; i < h; i++) {
+			InsertSort2(arr, i, n - 1, h);
+		}
+		h = h / 2;
+	}
+	printf("\n<Shell Sort>\n");
+	for (int j = 0; j < n; j++) {	
+		if (j!=0 && j % 10 == 0) {
+			printf("\n");
+		}
+		printf("%d ", arr[j]);
+	}
+	printf("\ncompare number : %d \tmove number : %d\n", shell_compare, shell_move);
+}
+
+void Merge(int a[], int low, int mid, int high)
+{
+	int b[10000];
+	int i = low;
+	int j = mid + 1;
+	int k = 0;
+
+	while (i <= mid && j <= high) {
+		if (a[i] <= a[j]) {
+			b[k] = a[i];
+			k++;
+			i++;
+			merge_compare++;
+		}	
+
+		else {
+			b[k] = a[j];
+			k++;
+			j++;
+			merge_compare++;
+			merge_move++;
+		}	
+	}
+	while (i <= mid) {
+		b[k++] = a[i++];
+	}
+
+	while (j <= high) {
+		b[k++] = a[j++];
+	}
+	k -= 1;
+	while (k >= 0) {
+		a[low + k] = b[k];
+		k--;
+	}
+}
+
+void MergeSort(int a[], int low, int high)
+{
+	if (low < high) {
+		int m = (high + low) / 2;
+		MergeSort(a, low, m);
+		MergeSort(a, m + 1, high);
+		Merge(a, low, m, high);
+	}
+}
+
+void MergePrint(int arr[],int num) {
+	printf("\n<Merge Sort>\n");
+	for (int i = 0; i < num; i++) {
+		if (i!=0 && i % 10 == 0) {
+			printf("\n");
+		}
+		printf("%d ", arr[i]);
+	}
+	printf("\ncompare number : %d \tmove number : %d\n", merge_compare, merge_move);
+}
+
+int Partition(int a[], int begin, int end) {
+	int pivot = a[begin];
+	int L = begin;
+	int R = end;
+	int temp;
+
+	while (L < R) {
+		while (a[L] <= a[pivot] && L <= end) {
+			L++;
+			quick_compare += 1;
+		}
+		while (a[R] > a[pivot]) {
+			R--;
+			quick_compare += 1;
+		}
+		if (L < R) {
+			temp = a[L];
+			a[L] = a[R];
+			a[R] = temp;
+			quick_compare += 1;
+			quick_move += 2;
+		}
+	}
+	temp = a[pivot];
+	a[pivot] = a[R];
+	a[R] = temp;
+	quick_move += 2;
+	return R;
+}
+void QuickSort(int a[],int begin,int end){
+	int pivot;
+	if (begin < end) {
+		pivot = Partition(a, begin, end);
+		QuickSort(a, begin, pivot-1);
+		QuickSort(a, pivot + 1, end);
+	}
+}
+
+void QuickSort_Print(int a[], int num) {
+	int i = 0;
+	printf("\n<Quick Sort>\n");
+	for (i = 0; i < num; i++) {
+		if (i % 10 == 0 && i != 0) {
+			printf("\n");
+		}
+		printf("%d ", a[i]);
+	}
+	printf("\ncompare number : %d \tmove number : %d\n", quick_compare, quick_move);
+}
+
+int* arrayFun(int arr[], int copy[], int num) {
+	for (int i = 0; i < num; i++) {
+		arr[i] = copy[i];
+	}
+	
+	return arr;
+}
+
+int main() {
+	int num,temp;
+	printf("num :");
+	scanf("%d", &num);
+	int *arr = (int*)malloc(sizeof(int)*num);
+	int *copy = (int*)malloc(sizeof(int)*num);
+	srand((unsigned int)time(NULL));
+
+	for (int i = 0; i <= num-1; i++) {
+		again:;
+		temp = rand() % 100 + 1;
+		for (int j = 0; j <= i - 1; j++) {
+			if (arr[j] == temp) {
+				goto again;
+			}
+		}
+		arr[i] = temp;
+		
+	}
+	printf("arr[%d] = ", num);
+	for (int i = 0; i < num; i++) {
+		if (i!=0 && i%10==0) {
+			printf("\n");
+		}
+		printf("%d ", arr[i]);
+	}
+
+	for (int i = 0; i < num; i++) {
+		copy[i] = arr[i];
+	}
+
+	printf("\n");
+
+	SelectionSort(arr, num);
+	arr = arrayFun(arr, copy, num);
+	BubbleSort(arr, num);
+	arr = arrayFun(arr, copy, num);
+	InsertSort(arr, num);
+	arr = arrayFun(arr, copy, num);
+	ShellSort(arr, num);
+	arr = arrayFun(arr, copy, num);
+	MergeSort(arr,0, num-1);
+	MergePrint(arr, num);
+	arr = arrayFun(arr, copy, num);
+	QuickSort(arr, 0, num-1);
+	QuickSortPrint(arr, num);
+
+	free(arr);
+	free(copy);
+}
