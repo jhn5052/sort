@@ -1,10 +1,10 @@
-//201503564 ÇÑ¹ÎÁö
+//201503564 í•œë¯¼ì§€
 #include<stdio.h>
-#include<stdlib.h> //randomÇÔ¼ö
+#include<stdlib.h> //randomí•¨ìˆ˜
 #include<time.h>
-#include<string.h> //memsetÇÔ¼ö (¸Ş¸ğ¸® ÃÊ±âÈ­ÇÔ¼ö)
+#include<string.h> //memsetí•¨ìˆ˜ (ë©”ëª¨ë¦¬ ì´ˆê¸°í™”í•¨ìˆ˜)
 
-//°¢ Á¤·ÄÀÇ ºñ±³, ÀÌµ¿ array (1000 ~ 10000°³ - 10°³ ¹è¿­¿¡ ÇØ´çµÇ´Â ºñ±³, ±³È¯°ªÀ» ÀúÀåÇÏ±â À§ÇÔ)
+//ê° ì •ë ¬ì˜ ë¹„êµ, ì´ë™ array (1000 ~ 10000ê°œ - 10ê°œ ë°°ì—´ì— í•´ë‹¹ë˜ëŠ” ë¹„êµ, êµí™˜ê°’ì„ ì €ì¥í•˜ê¸° ìœ„í•¨)
 int selection_compare[11] = { 0 };
 int selection_move[11] = { 0 };
 int bubble_compare[11] = { 0 };
@@ -18,17 +18,17 @@ int merge_move[11] = { 0 };
 int quick_compare[11] = { 0 };
 int quick_move[11] = { 0 };
 
-//¼±ÅÃÁ¤·Ä
+//ì„ íƒì •ë ¬
 int selectionSort(int *arr, int n) {
 	int i, j;
 	int least;
 	for (i = 0; i < (n*1000) - 1; i++) {
 		least = arr[i];
-		//Ã¹¹øÂ° for¹® ºñ±³ È½¼ö Áõ°¡
+		//ì²«ë²ˆì§¸ forë¬¸ ë¹„êµ íšŸìˆ˜ ì¦ê°€
 		selection_compare[n] += 1;
 
 		for (j = i + 1; j < (n*1000); j++) {
-			//µÎ¹øÂ° for¹® ºñ±³ È½¼ö Áõ°¡
+			//ë‘ë²ˆì§¸ forë¬¸ ë¹„êµ íšŸìˆ˜ ì¦ê°€
 			selection_compare[n] += 1;
 
 			if (least > arr[j]) {
@@ -39,15 +39,15 @@ int selectionSort(int *arr, int n) {
 			}
 			selection_compare[n] += 1;
 		}
-		//µÎ¹øÂ° for¹® ºüÁ®³ª¿Ã¶§ ºñ±³
+		//ë‘ë²ˆì§¸ forë¬¸ ë¹ ì ¸ë‚˜ì˜¬ë•Œ ë¹„êµ
 		selection_compare[n] += 1;
 	}
-	//Ã¹¹øÂ° for¹® ºüÁ®³ª¿Ã¶§ ºñ±³
+	//ì²«ë²ˆì§¸ forë¬¸ ë¹ ì ¸ë‚˜ì˜¬ë•Œ ë¹„êµ
 	selection_compare[n] += 1;
 	return 0;
 }
 
-//¹öºíÁ¤·Ä
+//ë²„ë¸”ì •ë ¬
 int BubbleSort(int *arr, int n) {
 	int i, j;
 	int min;
@@ -70,7 +70,7 @@ int BubbleSort(int *arr, int n) {
 	return 0;
 }
 
-//»ğÀÔÁ¤·Ä
+//ì‚½ì…ì •ë ¬
 int InsertSort(int *arr, int n) {
 	int i, j;
 	int min;
@@ -85,7 +85,7 @@ int InsertSort(int *arr, int n) {
 				insert_move[n] += 1;
 			}
 			else {
-				insert_compare[n] += 1;//if¹®ºñ±³ÇÏ°í³ª¼­
+				insert_compare[n] += 1;//ifë¬¸ë¹„êµí•˜ê³ ë‚˜ì„œ
 				break;
 			}
 		}
@@ -95,7 +95,7 @@ int InsertSort(int *arr, int n) {
 	return 0;
 }
 
-//½©Á¤·Ä
+//ì‰˜ì •ë ¬
 void InsertionSort2(int *arr, int size, int h, int n) {
 	int i, j, tmp;
 	for (i = h; i < size; i += h) {
@@ -125,7 +125,7 @@ void ShellSort(int *arr, int n)
 	for (h = (n*1000) / 2; h > 0; h /= 2)
 	{
 		shell_compare[n] += 1;
-		for (i = 0; i < h; i++) //°£°İ ¾È¿¡ ÀÖ´Â ¹è¿­µé Á¤·Ä
+		for (i = 0; i < h; i++) //ê°„ê²© ì•ˆì— ìˆëŠ” ë°°ì—´ë“¤ ì •ë ¬
 		{
 			InsertionSort2(arr + i, (n*1000) - i, h, n);
 			shell_compare[n] += 1;
@@ -135,7 +135,7 @@ void ShellSort(int *arr, int n)
 	shell_compare[n] += 1;
 }
 
-//ÇÕº´Á¤·Ä
+//í•©ë³‘ì •ë ¬
 void merge(int arr[], int m, int d, int n) {
 	int i = m;
 	int j = d + 1;
@@ -186,30 +186,30 @@ void mergeSort(int arr[], int m, int n) {
 	merge_compare[n] += 1;
 }
 
-//ÄüÁ¤·Ä
+//í€µì •ë ¬
 int Partition(int arr[], int left, int right, int n)
 {
-	int pivot = arr[left]; // ÇÇ¹şÀÇ À§Ä¡
+	int pivot = arr[left]; // í”¼ë²—ì˜ ìœ„ì¹˜
 	int L = left + 1;
 	int R = right;
 	int tmp;
 
-	while (L <= R) // ±³Â÷µÇ±â Àü±îÁö ¹İº¹
+	while (L <= R) // êµì°¨ë˜ê¸° ì „ê¹Œì§€ ë°˜ë³µ
 	{
 		merge_compare[n] += 1;
-		while (pivot >= arr[L] && L <= right) // pivotº¸´Ù Å« °ªÀ» Ã£±â 
+		while (pivot >= arr[L] && L <= right) // pivotë³´ë‹¤ í° ê°’ì„ ì°¾ê¸° 
 		{
 			L++;
 			merge_compare[n] += 1;
 		}
 		merge_compare[n] += 1;
-		while (pivot <= arr[R] && R >= (left + 1)) // pivotº¸´Ù ÀÛÀº °ªÀ» Ã£±â
+		while (pivot <= arr[R] && R >= (left + 1)) // pivotë³´ë‹¤ ì‘ì€ ê°’ì„ ì°¾ê¸°
 		{
 			R--;
 			merge_compare[n] += 1;
 		}
 		merge_compare[n] += 1;
-		if (L <= R)// ±³Â÷µÇÁö ¾ÊÀº »óÅÂÀÌ¸é ¹Ù²Ù±â
+		if (L <= R)// êµì°¨ë˜ì§€ ì•Šì€ ìƒíƒœì´ë©´ ë°”ê¾¸ê¸°
 		{
 			tmp = arr[L];
 			arr[L] = arr[R];
@@ -231,9 +231,9 @@ void QuickSort(int arr[], int begin, int end, int n)
 {
 	if (begin <= end)
 	{
-		int pivot = Partition(arr, begin, end, n); // µÑ·Î ³ª´©¾î¼­
-		QuickSort(arr, begin, pivot - 1, n); // ¿ŞÂÊ ¿µ¿ªÀ» Á¤·ÄÇÑ´Ù.
-		QuickSort(arr, pivot + 1, end, n); // ¿À¸¥ÂÊ ¿µ¿ªÀ» Á¤·ÄÇÑ´Ù.
+		int pivot = Partition(arr, begin, end, n); // ë‘˜ë¡œ ë‚˜ëˆ„ì–´ì„œ
+		QuickSort(arr, begin, pivot - 1, n); // ì™¼ìª½ ì˜ì—­ì„ ì •ë ¬í•œë‹¤.
+		QuickSort(arr, pivot + 1, end, n); // ì˜¤ë¥¸ìª½ ì˜ì—­ì„ ì •ë ¬í•œë‹¤.
 	}
 	merge_compare[n] += 1;
 }
@@ -254,7 +254,7 @@ void make_tenArray(int arr[],int num) {
 }
 
 void tenArray_call(int one[], int two[], int three[], int four[], int five[], int six[], int seven[], int eight[], int nine[], int ten[]) {
-	//memsetÀ» ÀÌ¿ëÇÏ¿© 10°³ÀÇ ¹è¿­ ÃÊ±âÈ­
+	//memsetì„ ì´ìš©í•˜ì—¬ 10ê°œì˜ ë°°ì—´ ì´ˆê¸°í™”
 	memset(one, 0, sizeof(1000));
 	memset(two, 0, sizeof(2000));
 	memset(three, 0, sizeof(3000));
@@ -278,9 +278,9 @@ void tenArray_call(int one[], int two[], int three[], int four[], int five[], in
 	make_tenArray(ten, 10);
 }
 int main() {
-	printf("Á¤·Ä ¾Ë°í¸®Áò ºñ±³ 201503564 ÇÑ¹ÎÁö\n\n");
+	printf("ì •ë ¬ ì•Œê³ ë¦¬ì¦˜ ë¹„êµ 201503564 í•œë¯¼ì§€\n\n");
 	int test[15] = { 59, 61, 30, 29, 3, 1, 2, 5, 10, 70, 120, 71, 11, 24, 56 };
-	//ºñ±³ÇÒ 10°³ Å©±â ¹è¿­
+	//ë¹„êµí•  10ê°œ í¬ê¸° ë°°ì—´
 	int one[1000];
 	int two[2000];
 	int three[3000];
@@ -292,7 +292,7 @@ int main() {
 	int nine[9000];
 	int ten[10000];
 
-	//1. ¼±ÅÃÁ¤·Ä Ãâ·Â
+	//1. ì„ íƒì •ë ¬ ì¶œë ¥
 	printf("\nSelection Sort\n");
 	int n = 0;
 	tenArray_call(one, two, three, four, five, six, seven, eight, nine, ten);
@@ -311,7 +311,7 @@ int main() {
 		printf("size=%d  compare=%d  move=%d\n", n * 1000, selection_compare[n], selection_move[n]);
 	}
 
-	//2. ¹öºíÁ¤·Ä
+	//2. ë²„ë¸”ì •ë ¬
 	printf("\nBubble Sort\n");
 	tenArray_call(one, two, three, four, five, six, seven, eight, nine, ten);
 	BubbleSort(one, 1);
@@ -329,7 +329,7 @@ int main() {
 		printf("size=%d  compare=%d  move=%d\n", n * 1000, bubble_compare[n], bubble_move[n]);
 	}
 	
-	//3. »ğÀÔÁ¤·Ä
+	//3. ì‚½ì…ì •ë ¬
 	printf("\nInsert Sort\n");
 	tenArray_call(one, two, three, four, five, six, seven, eight, nine, ten);
 	InsertSort(one, 1);
@@ -349,7 +349,7 @@ int main() {
 	}
 
 
-	//4. ½©Á¤·Ä
+	//4. ì‰˜ì •ë ¬
 	printf("\nShell Sort\n");
 	tenArray_call(one, two, three, four, five, six, seven, eight, nine, ten);
 	ShellSort(one, 1);
@@ -367,7 +367,7 @@ int main() {
 		printf("size=%d  compare=%d  move=%d\n", n * 1000, shell_compare[n], shell_move[n]);
 	}
 	
-	//5. º´ÇÕÁ¤·Ä
+	//5. ë³‘í•©ì •ë ¬
 	printf("\nMerge Sort\n");
 	tenArray_call(one, two, three, four, five, six, seven, eight, nine, ten);
 	mergeSort(one, 0, 1-1);
@@ -385,10 +385,10 @@ int main() {
 		printf("size=%d  compare=%d  move=%d\n", n * 1000, merge_compare[n], merge_move[n]);
 	}
 
-	//6. ÄüÁ¤·Ä
+	//6. í€µì •ë ¬
 	printf("\nQuick Sort\n");
 	tenArray_call(one, two, three, four, five, six, seven, eight, nine, ten);
-	mergeSort(one, 0, 1 - 1, 1); //ÇØ´ç ºñ±³, ±³È¯ ¹è¿­¿¡ ³Ö±âÀ§ÇØ ÆÄ¶ó¹ÌÅÍ ÇÏ³ª Ãß°¡(merge_compare[n], merge_move[n]¿¡ Ãß°¡ÇÏ±â À§ÇÔ)
+	mergeSort(one, 0, 1 - 1, 1); //í•´ë‹¹ ë¹„êµ, êµí™˜ ë°°ì—´ì— ë„£ê¸°ìœ„í•´ íŒŒë¼ë¯¸í„° í•˜ë‚˜ ì¶”ê°€(merge_compare[n], merge_move[n]ì— ì¶”ê°€í•˜ê¸° ìœ„í•¨)
 	mergeSort(two, 0, 2 - 1, 2);
 	mergeSort(three, 0, 3 - 1, 3);
 	mergeSort(four, 0, 4 - 1, 4);
@@ -402,7 +402,5 @@ int main() {
 	for (n = 1; n <= 10; n++) {
 		printf("size=%d  compare=%d  move=%d\n", n * 1000, merge_compare[n], merge_move[n]);
 	}
-	//mallocÀ» »ç¿ëÇÏÁö ¾Ê°í 10°³ÀÇ ¹è¿­À» ¸¸µé¾î¼­ »ç¿ëÇß±â ¶§¹®¿¡ free¸¦ »ç¿ëÇÏÁö ¾Ê¾Ò½À´Ï´Ù.
-	while (1);
 	return 0;
 }
